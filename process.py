@@ -26,8 +26,8 @@ def estimate(df,target_col):
             coyp_cate_col.remove(target_col)
             if len(coyp_cate_col)==0:
                 norm_df=Data_normalized(input_data)
-                dummies_df=create_dummies(input_data,coyp_cate_col)
-                norm_df=Data_normalized(dummies_df)
+            dummies_df=create_dummies(input_data,coyp_cate_col)
+            norm_df=Data_normalized(dummies_df)
         elif (len(cate_col_lis)>0) and (target_col not in cate_col_lis):
             dummies_df=create_dummies(input_data,coyp_cate_col)
             norm_df=Data_normalized(dummies_df)
