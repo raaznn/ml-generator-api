@@ -1,5 +1,5 @@
 import numpy as np
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template,send_file
 import pickle
 import pandas as pd
 import json
@@ -42,16 +42,16 @@ def training():
             df_reset=df_reset
     return_model,best_mdl_dict,all_mdl_dict=estimate(df_reset,target_col)
     model_data=pickle.dumps(return_model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-    return jsonify({"Trained":"ok","Best model":best_mdl_dict,"all model":all_mdl_dict})
-    # return jsonify({"right":"ok"})
+    return send_file(BytesIO(model_data),attachment_filename='model',as_attachment=True)
 
-# @app.route('/testing',methods=['POST'])
-# def testing():
-#         # upload_model=request.files['upload_model']
-#         label_col=request.form['input_val']
-#         # my_mdl=pickle.load(upload_model)
-#         # predict_val=my_mdl.predict([[label_col]])
-#         return jsonify()
+@app.route('/testing',methods=['POST'])
+def testing():
+        upload_model=request.files['upload_model']
+        # label_col=request.form['input_val']
+        # inputs=[i for i in label_col.split(',')]
+        my_mdl=pickle.load(upload_model)
+        # predict_val=my_mdl.predict([[label_col]])
+        return jsonify({"testing":"ok"})
 
 if __name__ == "__main__":
     app.run(debug=True)
