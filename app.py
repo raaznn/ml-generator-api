@@ -8,6 +8,7 @@ import csv
 import io
 from process import estimate
 import warnings
+from test_preprocess import test_preprocessing
 warnings.filterwarnings('ignore')
 warnings.warn('DelftStack')
 warnings.warn('Do not show this message')
@@ -46,12 +47,18 @@ def training():
 
 @app.route('/testing',methods=['POST'])
 def testing():
-        upload_model=request.files['upload_model']
-        # label_col=request.form['input_val']
-        # inputs=[i for i in label_col.split(',')]
-        my_mdl=pickle.load(upload_model)
-        # predict_val=my_mdl.predict([[label_col]])
-        return jsonify({"testing":"ok"})
+    # upload_model=request.files['upload_model']
+    # main_df=request.files['datasets']
+    test_dict={'age':19,'sex':'female','bmi':27.9 ,'children':0,'smoker':'yes','region':'northwest'}
+    with open('models/insurance_model', 'rb') as file:
+        my_mdl = pickle.load(file)
+    main_df=pd.read_csv('datasets/insurance.csv')
+    clean_df=main_df.dropna(axis=0)
+    merged_df=clean_df.append(test_dict,ignore_index=True)
+    test_data=test_preprocessing(merged_df)
+    pre_val=my_mdl.predict([test_data])
+    # predict_val=my_mdl.predict([[label_col]])
+    return jsonify({"predict":pre_val[0]})
 
 if __name__ == "__main__":
     app.run(debug=True)
