@@ -1,9 +1,10 @@
 from process import feature_data,cate_to_num,Data_normalized,create_dummies
 def test_preprocessing(df1):
   input_data=df1.dropna(axis=1)
-  feature_data_=feature_data(df1)
-  cate_col_lis=cate_to_num(df1,feature_data_)
+  feature_data_=feature_data(input_data)
+  cate_col_lis=cate_to_num(input_data,feature_data_)
   coyp_cate_col=cate_col_lis.copy()
+  # print(feature_data_)
   if len(cate_col_lis)==0:
       norm_df=Data_normalized(input_data)
   else:
