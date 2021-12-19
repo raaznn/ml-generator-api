@@ -70,7 +70,7 @@ def train_machine(x,y,target_type):
       return_result=result_df.sort_values(by='best_score',ascending=False,ignore_index=True).loc[0]
       optimized_model =model_params_prediction[return_result.model]['model']
       reg=optimized_model.fit(X_train,y_train)
-      return reg,return_result.to_dict(),result_df.to_dict()
+      return reg
 
     else:
       result=gridesearch(X_train,y_train,model_params_classification)
@@ -79,7 +79,7 @@ def train_machine(x,y,target_type):
       return_result=all_model.loc[0]
       optimized_model =model_params_classification[return_result.model]['model']
       reg=optimized_model.fit(X_train,y_train)
-      return reg,return_result.to_dict(),result_df.to_dict()
+      return reg
 
 if __name__=="__main__":
     print("Requried libarary for supervised model are loaded")

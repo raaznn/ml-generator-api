@@ -32,10 +32,11 @@ def estimate(df,target_col):
             dummies_df=create_dummies(input_data,coyp_cate_col)
             norm_df=Data_normalized(dummies_df)
     if target_col in cate_col_lis:
-        return_model,best_mdl_dict,all_mdl_dict=train_machine(norm_df,df[target_col],"classification")
+        return_model=train_machine(norm_df,df[target_col],"classification")
     else:
-        return_model,best_mdl_dict,all_mdl_dict=train_machine(norm_df,df[target_col],"prediction")
-    return return_model,best_mdl_dict,all_mdl_dict
+        return_model=train_machine(norm_df,df[target_col],"prediction")
+    return return_model
+    # return norm_df
 
 if __name__=='__main__':
     print("process are alright")
